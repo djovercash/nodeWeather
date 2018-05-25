@@ -1,7 +1,7 @@
 console.log("Starting App")
 
 setTimeout(() => {
-  console.log("Inside of callback")
+  console.log("First setTimeout")
 }, 2000)
 
 setTimeout(() => {
