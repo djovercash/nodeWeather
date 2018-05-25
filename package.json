@@ -1,0 +1,22 @@
+{
+  "name": "nodeweather",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/djovercash/nodeWeather.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/djovercash/nodeWeather/issues"
+  },
+  "homepage": "https://github.com/djovercash/nodeWeather#readme",
+  "dependencies": {
+    "request": "^2.73.0"
+  }
+}
