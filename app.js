@@ -1,5 +1,6 @@
-const request = require('request')
 const yargs = require('yargs')
+
+const geocode = require('./geocode/geocode')
 
 const argv = yargs
   .options({
@@ -14,21 +15,31 @@ const argv = yargs
   .alias('help', 'h')
   .argv;
 
-  var addressEncode = encodeURIComponent(argv.address)
-
-request({
-  url: `https://maps.googleapis.com/maps/api/geocode/json?address=${addressEncode}&key=`,
-  json: true
-}, (error, response, body) => {
-  if (error) {
-    console.log("Unable to connect to Google")
-  } else if (body.status === "ZERO_RESULTS") {
-    console.log("Zero Results for given address")
-  } else if (body.status === "OK"){
-      console.log(`Address: ${body.results[0].formatted_address}`);
-      console.log(`Latitude: ${body.results[0].geometry.location.lat}`);
-      console.log(`Longitude: ${body.results[0].geometry.location.lng}`);
+geocode.geocodeAddress(argv.address, (errorMessage, results) => {
+  if (errorMessage) {
+    console.log(errorMessage)
   } else {
-    console.log("WHAT?")
+    console.log(JSON.stringify(results, undefined, 2))
+    let lat = results.latitude
+    let lng = results.longitude
+    console.log(lat, lng)
+    showWeather(lat, lng)
   }
 })
+
+
+
+const request = require('request')
+
+showWeather = (lat, lng) => {
+  request({
+    url: `https://api.darksky.net/forecast/dedac8699c06b18d90be6c3fc8be82ee/${lat},${lng}`,
+    json: true
+  }, (error, response, body) => {
+    if (error) {
+      console.log("Error Here")
+    } else {
+      console.log(body.currently.summary)
+    }
+  })
+}
